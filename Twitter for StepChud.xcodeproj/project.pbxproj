@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A8C9F68F2C10D8B0498C202F /* Pods_Twitter_for_StepChud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADAA4FA106732CDFFC419372 /* Pods_Twitter_for_StepChud.framework */; };
 		DCCE48F01DC1626A0025B96A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCE48EF1DC1626A0025B96A /* AppDelegate.swift */; };
 		DCCE48F21DC1626A0025B96A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCE48F11DC1626A0025B96A /* ViewController.swift */; };
 		DCCE48F51DC1626A0025B96A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCCE48F31DC1626A0025B96A /* Main.storyboard */; };
@@ -15,6 +16,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		ADAA4FA106732CDFFC419372 /* Pods_Twitter_for_StepChud.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Twitter_for_StepChud.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2085679C859501C789031D0 /* Pods-Twitter for StepChud.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Twitter for StepChud.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Twitter for StepChud/Pods-Twitter for StepChud.debug.xcconfig"; sourceTree = "<group>"; };
 		DCCE48EC1DC1626A0025B96A /* Twitter for StepChud.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Twitter for StepChud.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCCE48EF1DC1626A0025B96A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DCCE48F11DC1626A0025B96A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +25,7 @@
 		DCCE48F61DC1626A0025B96A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DCCE48F91DC1626A0025B96A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DCCE48FB1DC1626A0025B96A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E177A5641B163C4A9646AD03 /* Pods-Twitter for StepChud.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Twitter for StepChud.release.xcconfig"; path = "Pods/Target Support Files/Pods-Twitter for StepChud/Pods-Twitter for StepChud.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +33,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8C9F68F2C10D8B0498C202F /* Pods_Twitter_for_StepChud.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7A60860409CDD01C4CE995CC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ADAA4FA106732CDFFC419372 /* Pods_Twitter_for_StepChud.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CFB24837315DE0ACCC1B9DB7 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B2085679C859501C789031D0 /* Pods-Twitter for StepChud.debug.xcconfig */,
+				E177A5641B163C4A9646AD03 /* Pods-Twitter for StepChud.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		DCCE48E31DC1626A0025B96A = {
 			isa = PBXGroup;
 			children = (
 				DCCE48EE1DC1626A0025B96A /* Twitter for StepChud */,
 				DCCE48ED1DC1626A0025B96A /* Products */,
+				CFB24837315DE0ACCC1B9DB7 /* Pods */,
+				7A60860409CDD01C4CE995CC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -71,9 +95,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DCCE48FE1DC1626A0025B96A /* Build configuration list for PBXNativeTarget "Twitter for StepChud" */;
 			buildPhases = (
+				74CD5986B8F61D82AC21DB9F /* [CP] Check Pods Manifest.lock */,
 				DCCE48E81DC1626A0025B96A /* Sources */,
 				DCCE48E91DC1626A0025B96A /* Frameworks */,
 				DCCE48EA1DC1626A0025B96A /* Resources */,
+				E9C44393398138B30CC584D9 /* [CP] Embed Pods Frameworks */,
+				36C1EF76AFF2248D7629029B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -131,6 +158,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		36C1EF76AFF2248D7629029B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Twitter for StepChud/Pods-Twitter for StepChud-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		74CD5986B8F61D82AC21DB9F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E9C44393398138B30CC584D9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Twitter for StepChud/Pods-Twitter for StepChud-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DCCE48E81DC1626A0025B96A /* Sources */ = {
@@ -259,6 +334,7 @@
 		};
 		DCCE48FF1DC1626A0025B96A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B2085679C859501C789031D0 /* Pods-Twitter for StepChud.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = HRB27U7K2P;
@@ -272,6 +348,7 @@
 		};
 		DCCE49001DC1626A0025B96A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E177A5641B163C4A9646AD03 /* Pods-Twitter for StepChud.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = HRB27U7K2P;
@@ -302,6 +379,7 @@
 				DCCE49001DC1626A0025B96A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
