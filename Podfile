@@ -7,6 +7,7 @@ target 'Twitter for StepChud' do
 
   # Pods for Twitter for StepChud
   pod 'Alamofire'
+  pod 'AlamofireImage'
   pod 'BDBOAuth1Manager'
 
 end

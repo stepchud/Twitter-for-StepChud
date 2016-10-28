@@ -1,0 +1,65 @@
+//
+//  User.swift
+//  Twitter for StepChud
+//
+//  Created by Stephen Chudleigh on 10/27/16.
+//  Copyright © 2016 Stephen Chudleigh. All rights reserved.
+//
+
+import Foundation
+
+class User: NSObject {
+    
+    static let userDidLogoutNotification = "UserDidLogout"
+    static let currentUserKey = "currentUserData"
+    
+    var name: String?
+    var username: String?
+    var profileURL: URL?
+    var tagLine: String?
+    
+    var dictionary: NSDictionary?
+    
+    init(dictionary: NSDictionary) {
+        self.dictionary = dictionary
+        
+        name = dictionary["name"] as? String
+        username = dictionary["screenname"] as? String
+        tagLine = dictionary["description"] as? String
+        if let url = dictionary["profile_image_url_https"] as? String {
+            profileURL = URL(string: url)
+        }
+        
+    }
+    
+    static var _currentUser: User?
+    
+    class var currentUser: User? {
+        get {
+            if (_currentUser == nil) {
+                let defaults = UserDefaults.standard
+                
+                if let userData = defaults.object(forKey: User.currentUserKey) as? Data {
+                    let dictionary = try! JSONSerialization.jsonObject(with: userData, options: []) as! NSDictionary
+                    let user = User(dictionary: dictionary)
+                    _currentUser = user
+                }
+            }
+            return _currentUser
+        }
+        
+        set(user) {
+            _currentUser = user
+            
+            let defaults = UserDefaults.standard
+            if let user = user {
+                let data = try! JSONSerialization.data(withJSONObject: user.dictionary!, options: [])
+                
+                defaults.set(data, forKey: User.currentUserKey)
+            } else {
+                defaults.removeObject(forKey: User.currentUserKey)
+            }
+            defaults.synchronize()
+        }
+    }
+}

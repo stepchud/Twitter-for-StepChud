@@ -8,23 +8,37 @@
 
 /* Begin PBXBuildFile section */
 		A8C9F68F2C10D8B0498C202F /* Pods_Twitter_for_StepChud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADAA4FA106732CDFFC419372 /* Pods_Twitter_for_StepChud.framework */; };
+		DC290AE91DC3E690008C0FA0 /* TweetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC290AE81DC3E690008C0FA0 /* TweetCell.swift */; };
+		DC290AEC1DC3EE31008C0FA0 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC290AEB1DC3EE31008C0FA0 /* Date.swift */; };
+		DC82BF2D1DC28B0B008CFE19 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC82BF2C1DC28B0B008CFE19 /* User.swift */; };
+		DC82BF2F1DC28B45008CFE19 /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC82BF2E1DC28B45008CFE19 /* Tweet.swift */; };
+		DC82BF321DC29C5B008CFE19 /* TwitterClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC82BF311DC29C5B008CFE19 /* TwitterClient.swift */; };
+		DC82BF341DC2B105008CFE19 /* TweetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC82BF331DC2B105008CFE19 /* TweetsViewController.swift */; };
+		DC8F52F31DC3D7DB000677D0 /* TweetDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8F52F21DC3D7DB000677D0 /* TweetDetailViewController.swift */; };
 		DCCE48F01DC1626A0025B96A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCE48EF1DC1626A0025B96A /* AppDelegate.swift */; };
-		DCCE48F21DC1626A0025B96A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCE48F11DC1626A0025B96A /* ViewController.swift */; };
 		DCCE48F51DC1626A0025B96A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCCE48F31DC1626A0025B96A /* Main.storyboard */; };
 		DCCE48F71DC1626A0025B96A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCCE48F61DC1626A0025B96A /* Assets.xcassets */; };
 		DCCE48FA1DC1626A0025B96A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCCE48F81DC1626A0025B96A /* LaunchScreen.storyboard */; };
+		DCF9A43E1DC1733E004D0E05 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF9A43D1DC1733E004D0E05 /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		ADAA4FA106732CDFFC419372 /* Pods_Twitter_for_StepChud.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Twitter_for_StepChud.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2085679C859501C789031D0 /* Pods-Twitter for StepChud.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Twitter for StepChud.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Twitter for StepChud/Pods-Twitter for StepChud.debug.xcconfig"; sourceTree = "<group>"; };
+		DC290AE81DC3E690008C0FA0 /* TweetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetCell.swift; sourceTree = "<group>"; };
+		DC290AEB1DC3EE31008C0FA0 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		DC82BF2C1DC28B0B008CFE19 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		DC82BF2E1DC28B45008CFE19 /* Tweet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
+		DC82BF311DC29C5B008CFE19 /* TwitterClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterClient.swift; sourceTree = "<group>"; };
+		DC82BF331DC2B105008CFE19 /* TweetsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetsViewController.swift; sourceTree = "<group>"; };
+		DC8F52F21DC3D7DB000677D0 /* TweetDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetDetailViewController.swift; sourceTree = "<group>"; };
 		DCCE48EC1DC1626A0025B96A /* Twitter for StepChud.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Twitter for StepChud.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCCE48EF1DC1626A0025B96A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DCCE48F11DC1626A0025B96A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DCCE48F41DC1626A0025B96A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DCCE48F61DC1626A0025B96A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DCCE48F91DC1626A0025B96A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DCCE48FB1DC1626A0025B96A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DCF9A43D1DC1733E004D0E05 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E177A5641B163C4A9646AD03 /* Pods-Twitter for StepChud.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Twitter for StepChud.release.xcconfig"; path = "Pods/Target Support Files/Pods-Twitter for StepChud/Pods-Twitter for StepChud.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -57,6 +71,22 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		DC290AEA1DC3EE1F008C0FA0 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DC290AEB1DC3EE31008C0FA0 /* Date.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		DC82BF301DC29C41008CFE19 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				DC82BF311DC29C5B008CFE19 /* TwitterClient.swift */,
+			);
+			name = API;
+			sourceTree = "<group>";
+		};
 		DCCE48E31DC1626A0025B96A = {
 			isa = PBXGroup;
 			children = (
@@ -78,14 +108,45 @@
 		DCCE48EE1DC1626A0025B96A /* Twitter for StepChud */ = {
 			isa = PBXGroup;
 			children = (
+				DC290AEA1DC3EE1F008C0FA0 /* Extensions */,
+				DC82BF301DC29C41008CFE19 /* API */,
+				DCF9A43C1DC172DC004D0E05 /* View Controllers */,
+				DCF9A43B1DC172D3004D0E05 /* Views */,
+				DCF9A43A1DC172C9004D0E05 /* Models */,
 				DCCE48EF1DC1626A0025B96A /* AppDelegate.swift */,
-				DCCE48F11DC1626A0025B96A /* ViewController.swift */,
 				DCCE48F31DC1626A0025B96A /* Main.storyboard */,
 				DCCE48F61DC1626A0025B96A /* Assets.xcassets */,
 				DCCE48F81DC1626A0025B96A /* LaunchScreen.storyboard */,
 				DCCE48FB1DC1626A0025B96A /* Info.plist */,
 			);
 			path = "Twitter for StepChud";
+			sourceTree = "<group>";
+		};
+		DCF9A43A1DC172C9004D0E05 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				DC82BF2C1DC28B0B008CFE19 /* User.swift */,
+				DC82BF2E1DC28B45008CFE19 /* Tweet.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		DCF9A43B1DC172D3004D0E05 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DC290AE81DC3E690008C0FA0 /* TweetCell.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		DCF9A43C1DC172DC004D0E05 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DCF9A43D1DC1733E004D0E05 /* LoginViewController.swift */,
+				DC82BF331DC2B105008CFE19 /* TweetsViewController.swift */,
+				DC8F52F21DC3D7DB000677D0 /* TweetDetailViewController.swift */,
+			);
+			name = "View Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -212,8 +273,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DCCE48F21DC1626A0025B96A /* ViewController.swift in Sources */,
+				DC82BF321DC29C5B008CFE19 /* TwitterClient.swift in Sources */,
+				DCF9A43E1DC1733E004D0E05 /* LoginViewController.swift in Sources */,
+				DC82BF341DC2B105008CFE19 /* TweetsViewController.swift in Sources */,
+				DC290AE91DC3E690008C0FA0 /* TweetCell.swift in Sources */,
 				DCCE48F01DC1626A0025B96A /* AppDelegate.swift in Sources */,
+				DC82BF2D1DC28B0B008CFE19 /* User.swift in Sources */,
+				DC8F52F31DC3D7DB000677D0 /* TweetDetailViewController.swift in Sources */,
+				DC290AEC1DC3EE31008C0FA0 /* Date.swift in Sources */,
+				DC82BF2F1DC28B45008CFE19 /* Tweet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,6 +325,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -307,6 +376,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -336,6 +406,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B2085679C859501C789031D0 /* Pods-Twitter for StepChud.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = HRB27U7K2P;
 				INFOPLIST_FILE = "Twitter for StepChud/Info.plist";
@@ -350,6 +421,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E177A5641B163C4A9646AD03 /* Pods-Twitter for StepChud.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = HRB27U7K2P;
 				INFOPLIST_FILE = "Twitter for StepChud/Info.plist";
