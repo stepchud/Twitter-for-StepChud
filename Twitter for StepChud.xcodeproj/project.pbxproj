@@ -10,6 +10,7 @@
 		A8C9F68F2C10D8B0498C202F /* Pods_Twitter_for_StepChud.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADAA4FA106732CDFFC419372 /* Pods_Twitter_for_StepChud.framework */; };
 		DC290AE91DC3E690008C0FA0 /* TweetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC290AE81DC3E690008C0FA0 /* TweetCell.swift */; };
 		DC290AEC1DC3EE31008C0FA0 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC290AEB1DC3EE31008C0FA0 /* Date.swift */; };
+		DC2F43A81DC41EB40024FD28 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F43A71DC41EB40024FD28 /* UIColor.swift */; };
 		DC82BF2D1DC28B0B008CFE19 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC82BF2C1DC28B0B008CFE19 /* User.swift */; };
 		DC82BF2F1DC28B45008CFE19 /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC82BF2E1DC28B45008CFE19 /* Tweet.swift */; };
 		DC82BF321DC29C5B008CFE19 /* TwitterClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC82BF311DC29C5B008CFE19 /* TwitterClient.swift */; };
@@ -27,6 +28,8 @@
 		B2085679C859501C789031D0 /* Pods-Twitter for StepChud.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Twitter for StepChud.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Twitter for StepChud/Pods-Twitter for StepChud.debug.xcconfig"; sourceTree = "<group>"; };
 		DC290AE81DC3E690008C0FA0 /* TweetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetCell.swift; sourceTree = "<group>"; };
 		DC290AEB1DC3EE31008C0FA0 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		DC2F43A61DC417690024FD28 /* Twitter for StepChud.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Twitter for StepChud.entitlements"; sourceTree = "<group>"; };
+		DC2F43A71DC41EB40024FD28 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		DC82BF2C1DC28B0B008CFE19 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DC82BF2E1DC28B45008CFE19 /* Tweet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
 		DC82BF311DC29C5B008CFE19 /* TwitterClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterClient.swift; sourceTree = "<group>"; };
@@ -75,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				DC290AEB1DC3EE31008C0FA0 /* Date.swift */,
+				DC2F43A71DC41EB40024FD28 /* UIColor.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -108,6 +112,7 @@
 		DCCE48EE1DC1626A0025B96A /* Twitter for StepChud */ = {
 			isa = PBXGroup;
 			children = (
+				DC2F43A61DC417690024FD28 /* Twitter for StepChud.entitlements */,
 				DC290AEA1DC3EE1F008C0FA0 /* Extensions */,
 				DC82BF301DC29C41008CFE19 /* API */,
 				DCF9A43C1DC172DC004D0E05 /* View Controllers */,
@@ -186,6 +191,11 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = HRB27U7K2P;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -282,6 +292,7 @@
 				DC8F52F31DC3D7DB000677D0 /* TweetDetailViewController.swift in Sources */,
 				DC290AEC1DC3EE31008C0FA0 /* Date.swift in Sources */,
 				DC82BF2F1DC28B45008CFE19 /* Tweet.swift in Sources */,
+				DC2F43A81DC41EB40024FD28 /* UIColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -408,6 +419,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Twitter for StepChud/Twitter for StepChud.entitlements";
 				DEVELOPMENT_TEAM = HRB27U7K2P;
 				INFOPLIST_FILE = "Twitter for StepChud/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -423,6 +435,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Twitter for StepChud/Twitter for StepChud.entitlements";
 				DEVELOPMENT_TEAM = HRB27U7K2P;
 				INFOPLIST_FILE = "Twitter for StepChud/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

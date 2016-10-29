@@ -22,16 +22,21 @@ class Tweet: NSObject {
     
     init(dictionary: NSDictionary) {
         formatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
+        if let userDict = dictionary["user"] as? NSDictionary {
+            fullName = userDict["name"] as? String
+            userName = userDict["screen_name"] as? String
+            
+            if let urlString = userDict["profile_image_url_https"] as? String {
+                profileImageURL = URL(string: urlString)
+            }
+        }
+        
         text = dictionary["text"] as? String
         retweetCount = (dictionary["retweet_count"] as? Int) ?? 0
-        favoritesCount = (dictionary["favorites_count"] as? Int) ?? 0
+        favoritesCount = (dictionary["favorite_count"] as? Int) ?? 0
         
         if let created_at = dictionary["created_at"] as? String {
             timestamp = formatter.date(from: created_at)
-        }
-        
-        if let urlString = dictionary["profile_image_url_https"] as? String {
-            self.profileImageURL = URL(string: urlString)
         }
     }
     
@@ -39,6 +44,7 @@ class Tweet: NSObject {
         var tweets = [Tweet]()
         
         for dictionary in dictionaries {
+            print(dictionary)
             let tweet = Tweet(dictionary: dictionary)
             tweets.append(tweet)
         }

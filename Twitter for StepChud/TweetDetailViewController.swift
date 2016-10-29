@@ -10,10 +10,34 @@ import UIKit
 
 class TweetDetailViewController: UIViewController {
 
+    var tweet: Tweet?
+    
+    @IBOutlet weak var profileImageView: UIImageView!
+    
+    @IBOutlet weak var fullNameLabel: UILabel!
+    @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var tweetTextLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var retweetsCountLabel: UILabel!
+    @IBOutlet weak var favoritesCountLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        loadTweet()
+    }
+    
+    func loadTweet() {
+        if let tweet = tweet {
+            if let url = tweet.profileImageURL {
+                profileImageView.af_setImage(withURL: url)
+            }
+            fullNameLabel.text = tweet.fullName
+            userNameLabel.text = tweet.userName
+            tweetTextLabel.text = tweet.text
+            retweetsCountLabel.text = "\(tweet.retweetCount)"
+            favoritesCountLabel.text = "\(tweet.favoritesCount)"
+        }
     }
 
     override func didReceiveMemoryWarning() {

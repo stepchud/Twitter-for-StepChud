@@ -7,12 +7,14 @@
 //
 
 import Foundation
+import BDBOAuth1Manager
 
 class User: NSObject {
     
     static let userDidLogoutNotification = "UserDidLogout"
     static let currentUserKey = "currentUserData"
     
+    var token: BDBOAuth1Credential?
     var name: String?
     var username: String?
     var profileURL: URL?
@@ -31,6 +33,7 @@ class User: NSObject {
         }
         
     }
+    
     
     static var _currentUser: User?
     

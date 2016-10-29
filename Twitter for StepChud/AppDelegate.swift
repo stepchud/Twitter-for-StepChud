@@ -9,6 +9,8 @@
 import UIKit
 import BDBOAuth1Manager
 
+let TwitterBlue = UIColor(red: 66, green: 152, blue: 237)
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

@@ -32,24 +32,21 @@ extension Date {
     }
     var relativeTime: String {
         let now = Date()
-        if now.years(from: self)   > 0 {
-            return now.years(from: self).description  + " year"  + { return now.years(from: self)   > 1 ? "s" : "" }() + " ago"
-        }
-        if now.months(from: self)  > 0 {
-            return now.months(from: self).description + " month" + { return now.months(from: self)  > 1 ? "s" : "" }() + " ago"
-        }
-        if now.weeks(from:self)   > 0 {
-            return now.weeks(from: self).description  + " week"  + { return now.weeks(from: self)   > 1 ? "s" : "" }() + " ago"
-        }
-        if now.days(from: self)    > 0 {
-            if now.days(from:self) == 1 { return "Yesterday" }
+        let daysAgo = now.days(from: self)
+        if daysAgo == 1 {
+            return "Yesterday"
+        } else if daysAgo > 1 && daysAgo <= 7 {
             return now.days(from: self).description + " days ago"
+        } else if daysAgo > 7 {
+            let formatter = DateFormatter()
+            formatter.dateStyle = .short
+            return formatter.string(from: self)
         }
         if now.hours(from: self)   > 0 {
-            return "\(now.hours(from: self)) hour"     + { return now.hours(from: self)   > 1 ? "s" : "" }() + " ago"
+            return "\(now.hours(from: self))h"
         }
         if now.minutes(from: self) > 0 {
-            return "\(now.minutes(from: self)) minute" + { return now.minutes(from: self) > 1 ? "s" : "" }() + " ago"
+            return "\(now.minutes(from: self))m"
         }
         if now.seconds(from: self) > 0 {
             if now.seconds(from: self) < 15 { return "Just now"  }

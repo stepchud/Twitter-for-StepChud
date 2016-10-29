@@ -19,8 +19,10 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.estimatedRowHeight = 120
         tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 120
+        navigationController?.navigationBar.barTintColor = TwitterBlue
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
 
         getTimelineTweets()
         // Do any additional setup after loading the view.
@@ -33,6 +35,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
         cell.tweet = tweets?[indexPath.row]
+        cell.selectionStyle = .none
         
         return cell
     }
@@ -60,14 +63,14 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: User.userDidLogoutNotification), object: nil)
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.destination is TweetDetailViewController {
+            let vc = segue.destination as! TweetDetailViewController
+            if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
+                vc.tweet = self.tweets?[indexPath.row]
+            }
+        }
     }
-    */
 
 }

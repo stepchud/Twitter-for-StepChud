@@ -51,6 +51,7 @@ class TwitterClient: BDBOAuth1SessionManager {
 
                 TwitterClient.sharedInstance?.currentAccount(
                     success: { (user: User) in
+                        user.token = accessToken
                         User.currentUser = user
                         self.loginSuccess?()
                     }, failure: { (error: Error) in
