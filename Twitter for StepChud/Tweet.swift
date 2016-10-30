@@ -10,6 +10,7 @@ import UIKit
 
 class Tweet: NSObject {
     
+    var id: String?
     var fullName: String?
     var userName: String?
     var text: String?
@@ -31,6 +32,7 @@ class Tweet: NSObject {
             }
         }
         
+        id = dictionary["id_str"] as? String
         text = dictionary["text"] as? String
         retweetCount = (dictionary["retweet_count"] as? Int) ?? 0
         favoritesCount = (dictionary["favorite_count"] as? Int) ?? 0
@@ -40,13 +42,15 @@ class Tweet: NSObject {
         }
     }
     
+    init(user: User, text: String) {
+        self.text = text
+    }
+    
     class func fromArray(dictionaries: [NSDictionary]) -> [Tweet] {
         var tweets = [Tweet]()
         
         for dictionary in dictionaries {
-            print(dictionary)
-            let tweet = Tweet(dictionary: dictionary)
-            tweets.append(tweet)
+            tweets.append(Tweet(dictionary: dictionary))
         }
         
         return tweets

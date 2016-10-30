@@ -12,6 +12,9 @@ import BDBOAuth1Manager
 class User: NSObject {
     
     static let userDidLogoutNotification = "UserDidLogout"
+    static let userStartedTweetNotification = "UserStartedTweet"
+    static let userSentTweetNotification = "UserSentTweet"
+    static let userCanceledTweetNotification = "UserCanceledTweet"
     static let currentUserKey = "currentUserData"
     
     var token: BDBOAuth1Credential?
@@ -26,7 +29,7 @@ class User: NSObject {
         self.dictionary = dictionary
         
         name = dictionary["name"] as? String
-        username = dictionary["screenname"] as? String
+        username = dictionary["screen_name"] as? String
         tagLine = dictionary["description"] as? String
         if let url = dictionary["profile_image_url_https"] as? String {
             profileURL = URL(string: url)

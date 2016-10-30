@@ -10,7 +10,7 @@ import UIKit
 
 class TweetDetailViewController: UIViewController {
 
-    var tweet: Tweet?
+    var tweet: Tweet!
     
     @IBOutlet weak var profileImageView: UIImageView!
     
@@ -33,7 +33,7 @@ class TweetDetailViewController: UIViewController {
                 profileImageView.af_setImage(withURL: url)
             }
             fullNameLabel.text = tweet.fullName
-            userNameLabel.text = tweet.userName
+            userNameLabel.text = "@\(tweet.userName ?? "")"
             tweetTextLabel.text = tweet.text
             retweetsCountLabel.text = "\(tweet.retweetCount)"
             favoritesCountLabel.text = "\(tweet.favoritesCount)"
@@ -44,8 +44,27 @@ class TweetDetailViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
+    @IBAction func onReplyButton(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: ComposeTweetViewController.storyboardIdentifier)
+        self.present(vc, animated: true, completion: nil)
+    }
+    @IBAction func onRetweetButton(_ sender: UIButton) {
+        if tweet.id != nil {
+            TwitterClient.sharedInstance?.retweet(tweetId: tweet.id!)
+        } else {
+            print("NO TWEET ID TO RT")
+        }
+    }
+    @IBAction func onFavoriteButton(_ sender: UIButton) {
+        if tweet.id != nil {
+            TwitterClient.sharedInstance?.favorite(tweetId: tweet.id!)
+        } else {
+            print("NO TWEET ID TO FAVE")
+        }
+    }
+    
     /*
     // MARK: - Navigation
 

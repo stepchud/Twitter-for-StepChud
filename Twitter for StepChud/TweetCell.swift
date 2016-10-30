@@ -21,7 +21,7 @@ class TweetCell: UITableViewCell {
     var tweet: Tweet! {
         didSet {
             fullNameLabel.text = tweet.fullName
-            userNameLabel.text = tweet.userName
+            userNameLabel.text = "@\(tweet.userName ?? "")"
             timestampLabel.text = tweet.timestamp?.relativeTime ?? "N/A"
             tweetTextLabel.text = tweet.text
             if let profileImage = tweet.profileImageURL {

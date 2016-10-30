@@ -17,15 +17,26 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupTableView()
+        setupNavigation()
+        getTimelineTweets()
+        // Do any additional setup after loading the view.
+    }
+    
+    func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120
+    }
+    
+    func setupNavigation() {
         navigationController?.navigationBar.barTintColor = TwitterBlue
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
-
-        getTimelineTweets()
-        // Do any additional setup after loading the view.
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshTweets), for: .valueChanged)
+        tableView.insertSubview(refreshControl, at: 0)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -41,11 +52,31 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     }
 
     func getTimelineTweets() {
-        TwitterClient.sharedInstance?.homeTimeline(success: { (tweets: [Tweet]) in
+        TwitterClient.sharedInstance?.homeTimeline(since: nil, success: { (tweets: [Tweet]) in
             self.tweets = tweets
             
             self.tableView.reloadData()
             
+            }, failure: { (error: Error) in
+                print(error.localizedDescription)
+        })
+    }
+    
+    func refreshTweets(refreshControl: UIRefreshControl) {
+        let maxId = tweets!.map { Int($0.id!) }.reduce(0) {
+            max, curr in
+            return max! > curr! ? max : curr
+        }
+        print("tweets since \(maxId)")
+        
+        TwitterClient.sharedInstance?.homeTimeline(since: maxId, success: { (newTweets: [Tweet]) in
+            print("\(newTweets.count) new tweets since last refresh")
+            if let tweets = self.tweets {
+                self.tweets = newTweets + tweets
+            }
+            
+            self.tableView.reloadData()
+            refreshControl.endRefreshing()
             }, failure: { (error: Error) in
                 print(error.localizedDescription)
         })
@@ -63,6 +94,12 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: User.userDidLogoutNotification), object: nil)
     }
 
+    @IBAction func onNewTweet(_ sender: AnyObject) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: ComposeTweetViewController.storyboardIdentifier)
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         if segue.destination is TweetDetailViewController {

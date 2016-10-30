@@ -78,8 +78,13 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
-    func homeTimeline(success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
-        get("1.1/statuses/home_timeline.json", parameters: nil, progress: nil,
+    func homeTimeline(since: Int?, success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
+        var parameters = [String: Int]()
+        if let since = since {
+            parameters["since_id"] = since
+        }
+        print(parameters)
+        get("1.1/statuses/home_timeline.json", parameters: parameters, progress: nil,
             success: { (task: URLSessionDataTask?, response: Any?) in
                 let dictionaries = response as! [NSDictionary]
                 let tweets = Tweet.fromArray(dictionaries: dictionaries)
@@ -88,5 +93,34 @@ class TwitterClient: BDBOAuth1SessionManager {
             failure: { (task: URLSessionDataTask?, error: Error) in
                 failure(error)
         })
+    }
+    
+    func sendTweet(_ text: String) {
+        if !text.isEmpty {
+            print("sending tweet: \(text)")
+            post("1.1/statuses/update.json", parameters: ["status": text], progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
+                print("tweet sent")
+            }) { (task: URLSessionDataTask?, error: Error) in
+                print("TWEET ERROR \(error.localizedDescription)")
+            }
+        } else {
+            print("TWEET ERROR no text to tweet")
+        }
+    }
+    
+    func retweet(tweetId: String) {
+        post("1.1/statuses/retweet/\(tweetId).json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
+            print("retweet complete")
+        }) { (task: URLSessionDataTask?, error: Error) in
+            print("RETWEET ERROR \(error.localizedDescription)")
+        }
+    }
+    
+    func favorite(tweetId: String) {
+        post("1.1/favorites/create.json", parameters: ["id": tweetId], progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
+            print("fave complete")
+        }) { (task: URLSessionDataTask?, error: Error) in
+            print("FAVE ERROR \(error.localizedDescription)")
+        }
     }
 }
