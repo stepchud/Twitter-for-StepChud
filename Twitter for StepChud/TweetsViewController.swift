@@ -10,15 +10,20 @@ import UIKit
 
 class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    var tweets: [Tweet]?
+    var timeline: Timeline?
     
     @IBOutlet weak var tableView: UITableView!
+    
+    // infinite scrooooll
+    var isDataLoading = false
+    var loadingMoreView:InfiniteScrollActivityView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupTableView()
         setupNavigation()
+        setupInfiniteScroll()
         getTimelineTweets()
         // Do any additional setup after loading the view.
     }
@@ -40,20 +45,23 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tweets?.count ?? 0
+        return timeline?.tweets?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
-        cell.tweet = tweets?[indexPath.row]
+        if let tweet = timeline?.tweets?[indexPath.row] {
+            cell.tweet = tweet
+            cell.delegate = self
+        }
         cell.selectionStyle = .none
         
         return cell
     }
 
     func getTimelineTweets() {
-        TwitterClient.sharedInstance?.homeTimeline(since: nil, success: { (tweets: [Tweet]) in
-            self.tweets = tweets
+        TwitterClient.sharedInstance?.homeTimeline(since: nil, before: nil, success: { (tweets: [Tweet]) in
+            self.timeline = Timeline(tweets: tweets)
             
             self.tableView.reloadData()
             
@@ -63,23 +71,36 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func refreshTweets(refreshControl: UIRefreshControl) {
-        let maxId = tweets!.map { Int($0.id!) }.reduce(0) {
-            max, curr in
-            return max! > curr! ? max : curr
-        }
-        print("tweets since \(maxId)")
-        
-        TwitterClient.sharedInstance?.homeTimeline(since: maxId, success: { (newTweets: [Tweet]) in
-            print("\(newTweets.count) new tweets since last refresh")
-            if let tweets = self.tweets {
-                self.tweets = newTweets + tweets
-            }
-            
+        TwitterClient.sharedInstance?.homeTimeline(since: timeline?.maxID, before: nil, success: { (newTweets: [Tweet]) in
+            self.timeline?.prepend(tweets: newTweets)
             self.tableView.reloadData()
             refreshControl.endRefreshing()
             }, failure: { (error: Error) in
                 print(error.localizedDescription)
         })
+    }
+    
+    func loadOlderTweets() {
+        TwitterClient.sharedInstance?.homeTimeline(since: nil, before: timeline?.minID, success: { (olderTweets: [Tweet]) in
+            self.timeline?.append(tweets: olderTweets)
+            self.tableView.reloadData()
+            self.isDataLoading = false
+            self.loadingMoreView!.stopAnimating()
+            }, failure: { (error: Error) in
+                // handle error loading tweets
+        })
+    }
+    
+    // Set up Infinite Scroll loading indicator
+    func setupInfiniteScroll() {
+        let frame = CGRect(x: 0, y: tableView.contentSize.height, width: tableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
+        loadingMoreView = InfiniteScrollActivityView(frame: frame)
+        loadingMoreView!.isHidden = true
+        tableView.addSubview(loadingMoreView!)
+        
+        var insets = tableView.contentInset;
+        insets.bottom += InfiniteScrollActivityView.defaultHeight;
+        tableView.contentInset = insets
     }
     
     override func didReceiveMemoryWarning() {
@@ -96,7 +117,10 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
 
     @IBAction func onNewTweet(_ sender: AnyObject) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: ComposeTweetViewController.storyboardIdentifier)
+        let vc = storyboard.instantiateViewController(withIdentifier: ComposeTweetViewController.storyboardIdentifier) as! UINavigationController
+        if let composeVC = vc.viewControllers.first as? ComposeTweetViewController {
+            composeVC.delegate = self
+        }
         self.present(vc, animated: true, completion: nil)
     }
     
@@ -105,9 +129,51 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         if segue.destination is TweetDetailViewController {
             let vc = segue.destination as! TweetDetailViewController
             if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
-                vc.tweet = self.tweets?[indexPath.row]
+                vc.tweet = self.timeline?.tweets?[indexPath.row]
             }
         }
     }
+}
 
+extension TweetsViewController: ComposeTweetDelegate {
+    func composeTweetViewController(newTweet: Tweet) {
+        timeline?.prepend(tweets: [newTweet])
+        tableView.reloadData()
+    }
+}
+
+extension TweetsViewController: TweetCellDelegate {
+    func tweetCell(tweetCell: TweetCell, didReply: Bool) {
+        if let tweet = tweetCell.tweet {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: ComposeTweetViewController.storyboardIdentifier) as! UINavigationController
+            if let composeVC = vc.viewControllers.first as? ComposeTweetViewController {
+                composeVC.replyTweet = tweet
+                composeVC.delegate = self
+            }
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+}
+
+extension TweetsViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if !isDataLoading {
+            // Calculate the position of one screen length before the bottom of the results
+            let scrollViewContentHeight = tableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
+            
+            // When the user has scrolled past the threshold, start requesting
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.isDragging) {
+                isDataLoading = true
+                
+                // Update position of loadingMoreView, and start loading indicator
+                let frame = CGRect(x: 0, y: tableView.contentSize.height, width: tableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
+                loadingMoreView?.frame = frame
+                loadingMoreView!.startAnimating()
+                
+                loadOlderTweets()
+            }
+        }
+    }
 }

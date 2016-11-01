@@ -21,6 +21,9 @@ class TweetDetailViewController: UIViewController {
     @IBOutlet weak var retweetsCountLabel: UILabel!
     @IBOutlet weak var favoritesCountLabel: UILabel!
     
+    @IBOutlet weak var retweetButton: UIButton!
+    @IBOutlet weak var favoriteButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -37,6 +40,7 @@ class TweetDetailViewController: UIViewController {
             tweetTextLabel.text = tweet.text
             retweetsCountLabel.text = "\(tweet.retweetCount)"
             favoritesCountLabel.text = "\(tweet.favoritesCount)"
+            updateButtons()
         }
     }
 
@@ -47,21 +51,54 @@ class TweetDetailViewController: UIViewController {
 
     @IBAction func onReplyButton(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: ComposeTweetViewController.storyboardIdentifier)
+        let vc = storyboard.instantiateViewController(withIdentifier: ComposeTweetViewController.storyboardIdentifier) as! UINavigationController
+        if let composeVC = vc.viewControllers.first as? ComposeTweetViewController {
+            composeVC.replyTweet = tweet
+        }
         self.present(vc, animated: true, completion: nil)
     }
+    
     @IBAction func onRetweetButton(_ sender: UIButton) {
-        if tweet.id != nil {
-            TwitterClient.sharedInstance?.retweet(tweetId: tweet.id!)
+        if let tweet = tweet {
+            TwitterClient.sharedInstance?.toggleRetweet(tweet: tweet, success: { () in
+                self.tweet.retweeted = !self.tweet.retweeted
+                if self.tweet.retweeted {
+                    self.tweet.retweetCount += 1
+                } else {
+                    self.tweet.retweetCount -= 1
+                }
+                self.retweetsCountLabel.text = "\(self.tweet.retweetCount)"
+                self.updateButtons()
+                }, failure: { (error: Error) in
+                    UIAlertPresenter.presentAlert(errorText: error.localizedDescription, from: self)
+            })
         } else {
-            print("NO TWEET ID TO RT")
+            UIAlertPresenter.presentAlert(errorText: "Tweet ID missing", from: self)
         }
     }
     @IBAction func onFavoriteButton(_ sender: UIButton) {
-        if tweet.id != nil {
-            TwitterClient.sharedInstance?.favorite(tweetId: tweet.id!)
+        if let tweet = tweet {
+            TwitterClient.sharedInstance?.toggleFavorite(tweet: tweet, success: {
+                self.tweet.favorited = !self.tweet.favorited
+                if self.tweet.favorited {
+                    self.tweet.favoritesCount += 1
+                } else {
+                    self.tweet.favoritesCount -= 1
+                }
+                self.favoritesCountLabel.text = "\(self.tweet.favoritesCount)"
+                self.updateButtons()
+                }, failure: { (error: Error) in
+                    UIAlertPresenter.presentAlert(errorText: error.localizedDescription, from: self)
+            })
         } else {
-            print("NO TWEET ID TO FAVE")
+            UIAlertPresenter.presentAlert(errorText: "Tweet ID missing", from: self)
+        }
+    }
+    
+    func updateButtons() {
+        if let tweet = tweet {
+            retweetButton.setImage(tweet.retweeted ? #imageLiteral(resourceName: "retweet-active") : #imageLiteral(resourceName: "retweet"), for: .normal)
+            favoriteButton.setImage(tweet.favorited ? #imageLiteral(resourceName: "favorite-active") : #imageLiteral(resourceName: "favorite"), for: .normal)
         }
     }
     
@@ -76,3 +113,4 @@ class TweetDetailViewController: UIViewController {
     */
 
 }
+

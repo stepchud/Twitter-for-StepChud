@@ -78,10 +78,13 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
-    func homeTimeline(since: Int?, success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
+    func homeTimeline(since: Int?, before: Int?, success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
         var parameters = [String: Int]()
         if let since = since {
             parameters["since_id"] = since
+        }
+        if let before = before {
+            parameters["max_id"] = before
         }
         print(parameters)
         get("1.1/statuses/home_timeline.json", parameters: parameters, progress: nil,
@@ -95,32 +98,60 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
-    func sendTweet(_ text: String) {
-        if !text.isEmpty {
-            print("sending tweet: \(text)")
-            post("1.1/statuses/update.json", parameters: ["status": text], progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
-                print("tweet sent")
-            }) { (task: URLSessionDataTask?, error: Error) in
-                print("TWEET ERROR \(error.localizedDescription)")
+    func sendTweet(_ text: String, replyTweet: Tweet?, success: @escaping (Tweet) -> (), failure: @escaping (Error) ->()) {
+        print("sending tweet to: \(replyTweet?.id!)")
+        var parameters = ["status": text]
+        if let replyID = replyTweet?.id {
+            parameters["in_reply_to_status_id"] = replyID
+        }
+        post("1.1/statuses/update.json", parameters: parameters, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
+            if let dictionary = response as? NSDictionary {
+                success(Tweet(dictionary: dictionary))
             }
-        } else {
-            print("TWEET ERROR no text to tweet")
+        }) { (task: URLSessionDataTask?, error: Error) in
+            failure(error)
         }
     }
     
-    func retweet(tweetId: String) {
-        post("1.1/statuses/retweet/\(tweetId).json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
-            print("retweet complete")
-        }) { (task: URLSessionDataTask?, error: Error) in
-            print("RETWEET ERROR \(error.localizedDescription)")
+    func toggleRetweet(tweet: Tweet, success: @escaping () -> (), failure: @escaping (Error) ->()) {
+        if let tweetID = tweet.id {
+            if tweet.retweeted { // undo RT
+                var originalTweet = tweetID
+                if let retweetStatus = tweet.retweetStatus {
+                    originalTweet = retweetStatus.id!
+                }
+                get("1.1/statuses/show/\(originalTweet).json", parameters: ["include_my_retweet": true],
+                    progress: nil, success: {(task: URLSessionDataTask, response: Any?) in
+                        if let dictionary = response as? NSDictionary {
+                            if let user_retweet = dictionary["current_user_retweet"] as? NSDictionary {
+                                self.post("1.1/statuses/unretweet/\(user_retweet["id_str"] as! String).json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
+                                    success()
+                                }) { (task: URLSessionDataTask?, error: Error) in
+                                    failure(error)
+                                }
+                            }
+                        }
+                }) { (task: URLSessionDataTask?, error: Error) in
+                    failure(error)
+                }
+            } else { // RT
+                post("1.1/statuses/retweet/\(tweetID).json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
+                    success()
+                }) { (task: URLSessionDataTask?, error: Error) in
+                    failure(error)
+                }
+            }
         }
     }
     
-    func favorite(tweetId: String) {
-        post("1.1/favorites/create.json", parameters: ["id": tweetId], progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
-            print("fave complete")
-        }) { (task: URLSessionDataTask?, error: Error) in
-            print("FAVE ERROR \(error.localizedDescription)")
+    func toggleFavorite(tweet: Tweet, success: @escaping () -> (), failure: @escaping (Error) ->()) {
+        if let tweetID = tweet.id {
+            let postURL = tweet.favorited ? "1.1/favorites/destroy.json" : "1.1/favorites/create.json"
+            post(postURL, parameters: ["id": tweetID], progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
+                success()
+            }) { (task: URLSessionDataTask?, error: Error) in
+                failure(error)
+            }
         }
     }
 }
