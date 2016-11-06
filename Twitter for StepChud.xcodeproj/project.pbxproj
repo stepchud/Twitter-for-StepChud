@@ -11,6 +11,9 @@
 		DC290AE91DC3E690008C0FA0 /* TweetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC290AE81DC3E690008C0FA0 /* TweetCell.swift */; };
 		DC290AEC1DC3EE31008C0FA0 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC290AEB1DC3EE31008C0FA0 /* Date.swift */; };
 		DC2F43A81DC41EB40024FD28 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2F43A71DC41EB40024FD28 /* UIColor.swift */; };
+		DC62B7D91DCD86E40086D052 /* HamburgerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC62B7D81DCD86E40086D052 /* HamburgerViewController.swift */; };
+		DC62B7DB1DCD8E3F0086D052 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC62B7DA1DCD8E3F0086D052 /* MenuViewController.swift */; };
+		DC62B7DD1DCD92E40086D052 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC62B7DC1DCD92E40086D052 /* MenuCell.swift */; };
 		DC81CB281DC52416001F8DE2 /* ComposeTweetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC81CB261DC52416001F8DE2 /* ComposeTweetViewController.swift */; };
 		DC81CB2D1DC6D2D3001F8DE2 /* InfiniteScrollActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC81CB2C1DC6D2D3001F8DE2 /* InfiniteScrollActivityView.swift */; };
 		DC81CB2F1DC6D47A001F8DE2 /* Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC81CB2E1DC6D47A001F8DE2 /* Timeline.swift */; };
@@ -34,6 +37,9 @@
 		DC290AEB1DC3EE31008C0FA0 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		DC2F43A61DC417690024FD28 /* Twitter for StepChud.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Twitter for StepChud.entitlements"; sourceTree = "<group>"; };
 		DC2F43A71DC41EB40024FD28 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		DC62B7D81DCD86E40086D052 /* HamburgerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HamburgerViewController.swift; sourceTree = "<group>"; };
+		DC62B7DA1DCD8E3F0086D052 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		DC62B7DC1DCD92E40086D052 /* MenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		DC81CB261DC52416001F8DE2 /* ComposeTweetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeTweetViewController.swift; sourceTree = "<group>"; };
 		DC81CB2C1DC6D2D3001F8DE2 /* InfiniteScrollActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfiniteScrollActivityView.swift; sourceTree = "<group>"; };
 		DC81CB2E1DC6D47A001F8DE2 /* Timeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timeline.swift; sourceTree = "<group>"; };
@@ -150,6 +156,7 @@
 			children = (
 				DC290AE81DC3E690008C0FA0 /* TweetCell.swift */,
 				DC81CB2C1DC6D2D3001F8DE2 /* InfiniteScrollActivityView.swift */,
+				DC62B7DC1DCD92E40086D052 /* MenuCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -162,6 +169,8 @@
 				DC82BF331DC2B105008CFE19 /* TweetsViewController.swift */,
 				DC81CB261DC52416001F8DE2 /* ComposeTweetViewController.swift */,
 				DC81CB301DC841D8001F8DE2 /* UIAlertPresenter.swift */,
+				DC62B7D81DCD86E40086D052 /* HamburgerViewController.swift */,
+				DC62B7DA1DCD8E3F0086D052 /* MenuViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -298,9 +307,11 @@
 				DC81CB2D1DC6D2D3001F8DE2 /* InfiniteScrollActivityView.swift in Sources */,
 				DC82BF321DC29C5B008CFE19 /* TwitterClient.swift in Sources */,
 				DCF9A43E1DC1733E004D0E05 /* LoginViewController.swift in Sources */,
+				DC62B7D91DCD86E40086D052 /* HamburgerViewController.swift in Sources */,
 				DC82BF341DC2B105008CFE19 /* TweetsViewController.swift in Sources */,
 				DC290AE91DC3E690008C0FA0 /* TweetCell.swift in Sources */,
 				DC81CB311DC841D9001F8DE2 /* UIAlertPresenter.swift in Sources */,
+				DC62B7DB1DCD8E3F0086D052 /* MenuViewController.swift in Sources */,
 				DCCE48F01DC1626A0025B96A /* AppDelegate.swift in Sources */,
 				DC82BF2D1DC28B0B008CFE19 /* User.swift in Sources */,
 				DC8F52F31DC3D7DB000677D0 /* TweetDetailViewController.swift in Sources */,
@@ -308,6 +319,7 @@
 				DC82BF2F1DC28B45008CFE19 /* Tweet.swift in Sources */,
 				DC81CB2F1DC6D47A001F8DE2 /* Timeline.swift in Sources */,
 				DC81CB281DC52416001F8DE2 /* ComposeTweetViewController.swift in Sources */,
+				DC62B7DD1DCD92E40086D052 /* MenuCell.swift in Sources */,
 				DC2F43A81DC41EB40024FD28 /* UIColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

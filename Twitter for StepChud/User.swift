@@ -11,6 +11,7 @@ import BDBOAuth1Manager
 
 class User: NSObject {
     
+    static let userDidLoginNotification = "UserDidLogin"
     static let userDidLogoutNotification = "UserDidLogout"
     static let userStartedTweetNotification = "UserStartedTweet"
     static let userSentTweetNotification = "UserSentTweet"

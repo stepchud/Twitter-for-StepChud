@@ -15,15 +15,20 @@ let TwitterBlue = UIColor(red: 66, green: 152, blue: 237)
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var hamburgerViewController: HamburgerViewController!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        if (User.currentUser != nil) {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "TweetsNavigationController")
-            window?.rootViewController = vc
-        }
         
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let menuVC = storyboard.instantiateViewController(withIdentifier: "MenuViewController") as! MenuViewController
+        hamburgerViewController = storyboard.instantiateViewController(withIdentifier: "HamburgerViewController") as! HamburgerViewController
+        menuVC.hamburgerViewController = hamburgerViewController
+        hamburgerViewController!.menuViewController = menuVC
+        
+        if (User.currentUser != nil) {
+            window?.rootViewController = hamburgerViewController
+        }
+
         registerNotificationObservers()
         return true
     }
@@ -66,6 +71,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let vc = storyboard.instantiateInitialViewController()
                 self.window?.rootViewController = vc
+        }
+        NotificationCenter.default.addObserver(
+            forName: NSNotification.Name(rawValue: User.userDidLoginNotification),
+            object: nil, queue: OperationQueue.main) {
+                (notification: Notification) in
+                self.window?.rootViewController = self.hamburgerViewController
         }
     }
 }
