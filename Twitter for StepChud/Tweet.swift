@@ -11,8 +11,7 @@ import UIKit
 class Tweet: NSObject {
     
     var id: String?
-    var fullName: String?
-    var userName: String?
+    var user: User?
     var text: String?
     var timestamp: Date?
     var retweeted=false
@@ -20,19 +19,13 @@ class Tweet: NSObject {
     var retweetCount: Int=0
     var favorited=false
     var favoritesCount: Int=0
-    var profileImageURL: URL?
     
     let formatter = DateFormatter()
     
     init(dictionary: NSDictionary) {
         formatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
         if let userDict = dictionary["user"] as? NSDictionary {
-            fullName = userDict["name"] as? String
-            userName = userDict["screen_name"] as? String
-            
-            if let urlString = userDict["profile_image_url_https"] as? String {
-                profileImageURL = URL(string: urlString)
-            }
+            user = User(dictionary: userDict)
         }
         
         id = dictionary["id_str"] as? String

@@ -40,7 +40,7 @@ class ComposeTweetViewController: UIViewController, UITextViewDelegate {
         }
         fullNameLabel.text = User.currentUser?.name
         userNameLabel.text = User.currentUser?.username
-        if let replyTo = replyTweet?.userName {
+        if let replyTo = replyTweet?.user?.name {
             composeTextView.text = "@\(replyTo) "
         } else {
             composeTextView.text = ""

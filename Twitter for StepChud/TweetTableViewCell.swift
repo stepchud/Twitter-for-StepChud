@@ -1,19 +1,18 @@
 //
-//  TweetCell.swift
+//  TweetTableViewCell.swift
 //  Twitter for StepChud
 //
-//  Created by Stephen Chudleigh on 10/28/16.
+//  Created by Stephen Chudleigh on 11/7/16.
 //  Copyright © 2016 Stephen Chudleigh. All rights reserved.
 //
 
 import UIKit
-import AlamofireImage
 
-@objc protocol TweetCellDelegate {
-    @objc optional func tweetCell(tweetCell: TweetCell, didReply: Bool)
+@objc protocol TweetTableViewCellDelegate {
+    @objc optional func tweetCell(tweetCell: TweetTableViewCell, didReply: Bool)
 }
 
-class TweetCell: UITableViewCell {
+class TweetTableViewCell: UITableViewCell {
 
     @IBOutlet weak var profileImageView: UIImageView!
     
@@ -21,12 +20,12 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
     @IBOutlet weak var tweetTextLabel: UILabel!
-
+    
     @IBOutlet weak var replyButton: UIButton!
     @IBOutlet weak var retweetButton: UIButton!
     @IBOutlet weak var favoriteButton: UIButton!
     
-    weak var delegate: TweetCellDelegate?
+    weak var delegate: TweetTableViewCellDelegate?
     
     var tweet: Tweet! {
         didSet {
@@ -54,10 +53,10 @@ class TweetCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
-
+    
     @IBAction func onReplyButton(_ sender: UIButton) {
         delegate?.tweetCell?(tweetCell: self, didReply: true)
     }
@@ -86,4 +85,5 @@ class TweetCell: UITableViewCell {
             // ignore it for now
         }
     }
+    
 }

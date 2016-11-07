@@ -58,12 +58,12 @@
                                         <rect key="frame" x="0.0" y="92" width="375" height="113"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GGF-ZE-r4g" id="o1i-L0-lKw">
-                                            <frame key="frameInset" width="342" height="112.5"/>
+                                            <frame key="frameInset" width="342" height="112"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1s6-s2-tRg">
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="q96-v7-zOk">
+                                                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="q96-v7-zOk">
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="64" id="3Km-vi-I5F"/>
                                                                 <constraint firstAttribute="width" constant="64" id="yBH-H7-iu9"/>
@@ -573,10 +573,10 @@
             </objects>
             <point key="canvasLocation" x="2407" y="1012"/>
         </scene>
-        <!--View Controller-->
+        <!--Profile View Controller-->
         <scene sceneID="OAj-hH-BLS">
             <objects>
-                <viewController id="wZ1-rf-CFL" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileViewController" id="wZ1-rf-CFL" customClass="ProfileViewController" customModule="Twitter_for_StepChud" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4vQ-hl-5RA"/>
                         <viewControllerLayoutGuide type="bottom" id="Foa-wr-qOB"/>
@@ -590,7 +590,7 @@
                                     <constraint firstAttribute="height" constant="140" id="k1q-iJ-yrV"/>
                                 </constraints>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="97J-ci-7W0" userLabel="Avatar">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="97J-ci-7W0" userLabel="Profile Image">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="84" id="ZeD-Bl-bvz"/>
                                     <constraint firstAttribute="width" constant="84" id="djD-R2-JsA"/>
@@ -735,6 +735,7 @@
                                             <outlet property="timestampLabel" destination="VdV-lU-Z80" id="mSs-Pc-ghn"/>
                                             <outlet property="tweetTextLabel" destination="VhS-FZ-sPC" id="e0V-bB-JqH"/>
                                             <outlet property="userNameLabel" destination="Bbv-Ji-SI0" id="zNr-HM-RzZ"/>
+                                            <segue destination="Dt0-IP-oe8" kind="show" id="MlX-87-r3z"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -773,6 +774,16 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="zRD-PT-FoG"/>
+                    <connections>
+                        <outlet property="followerCountLabel" destination="Ucj-84-LJD" id="NAq-EF-gih"/>
+                        <outlet property="followingCountLabel" destination="Nfb-8x-Msq" id="hMU-ZL-dpF"/>
+                        <outlet property="fullNameLabel" destination="HZf-oW-1z5" id="uJc-af-ZSs"/>
+                        <outlet property="profileBackgroundImage" destination="tNy-kU-nS4" id="7YH-Ev-GvG"/>
+                        <outlet property="profileBlurbLabel" destination="YqL-SB-uW8" id="eSm-kL-ueR"/>
+                        <outlet property="profileImage" destination="97J-ci-7W0" id="70N-uB-7kr"/>
+                        <outlet property="tableView" destination="wYm-oH-fbD" id="qrV-CA-xfV"/>
+                        <outlet property="userNameLabel" destination="tYr-ec-Fp3" id="lER-LS-nM3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gn1-fm-PXg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -838,4 +849,7 @@
         <image name="reply" width="16" height="16"/>
         <image name="retweet" width="16" height="16"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="MlX-87-r3z"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -27,6 +27,9 @@
 		DCCE48F51DC1626A0025B96A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCCE48F31DC1626A0025B96A /* Main.storyboard */; };
 		DCCE48F71DC1626A0025B96A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCCE48F61DC1626A0025B96A /* Assets.xcassets */; };
 		DCCE48FA1DC1626A0025B96A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCCE48F81DC1626A0025B96A /* LaunchScreen.storyboard */; };
+		DCDFC3961DD0714B00C2E56A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDFC3951DD0714B00C2E56A /* ProfileViewController.swift */; };
+		DCDFC3991DD0720900C2E56A /* TweetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDFC3971DD0720900C2E56A /* TweetTableViewCell.swift */; };
+		DCDFC39A1DD0720900C2E56A /* TweetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCDFC3981DD0720900C2E56A /* TweetTableViewCell.xib */; };
 		DCF9A43E1DC1733E004D0E05 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF9A43D1DC1733E004D0E05 /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +58,9 @@
 		DCCE48F61DC1626A0025B96A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DCCE48F91DC1626A0025B96A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DCCE48FB1DC1626A0025B96A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DCDFC3951DD0714B00C2E56A /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		DCDFC3971DD0720900C2E56A /* TweetTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetTableViewCell.swift; sourceTree = "<group>"; };
+		DCDFC3981DD0720900C2E56A /* TweetTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetTableViewCell.xib; sourceTree = "<group>"; };
 		DCF9A43D1DC1733E004D0E05 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E177A5641B163C4A9646AD03 /* Pods-Twitter for StepChud.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Twitter for StepChud.release.xcconfig"; path = "Pods/Target Support Files/Pods-Twitter for StepChud/Pods-Twitter for StepChud.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -157,6 +163,8 @@
 				DC290AE81DC3E690008C0FA0 /* TweetCell.swift */,
 				DC81CB2C1DC6D2D3001F8DE2 /* InfiniteScrollActivityView.swift */,
 				DC62B7DC1DCD92E40086D052 /* MenuCell.swift */,
+				DCDFC3971DD0720900C2E56A /* TweetTableViewCell.swift */,
+				DCDFC3981DD0720900C2E56A /* TweetTableViewCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -171,6 +179,7 @@
 				DC81CB301DC841D8001F8DE2 /* UIAlertPresenter.swift */,
 				DC62B7D81DCD86E40086D052 /* HamburgerViewController.swift */,
 				DC62B7DA1DCD8E3F0086D052 /* MenuViewController.swift */,
+				DCDFC3951DD0714B00C2E56A /* ProfileViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -246,6 +255,7 @@
 				DCCE48FA1DC1626A0025B96A /* LaunchScreen.storyboard in Resources */,
 				DCCE48F71DC1626A0025B96A /* Assets.xcassets in Resources */,
 				DCCE48F51DC1626A0025B96A /* Main.storyboard in Resources */,
+				DCDFC39A1DD0720900C2E56A /* TweetTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,7 +319,9 @@
 				DCF9A43E1DC1733E004D0E05 /* LoginViewController.swift in Sources */,
 				DC62B7D91DCD86E40086D052 /* HamburgerViewController.swift in Sources */,
 				DC82BF341DC2B105008CFE19 /* TweetsViewController.swift in Sources */,
+				DCDFC3991DD0720900C2E56A /* TweetTableViewCell.swift in Sources */,
 				DC290AE91DC3E690008C0FA0 /* TweetCell.swift in Sources */,
+				DCDFC3961DD0714B00C2E56A /* ProfileViewController.swift in Sources */,
 				DC81CB311DC841D9001F8DE2 /* UIAlertPresenter.swift in Sources */,
 				DC62B7DB1DCD8E3F0086D052 /* MenuViewController.swift in Sources */,
 				DCCE48F01DC1626A0025B96A /* AppDelegate.swift in Sources */,

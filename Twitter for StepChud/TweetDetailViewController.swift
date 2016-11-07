@@ -32,11 +32,11 @@ class TweetDetailViewController: UIViewController {
     
     func loadTweet() {
         if let tweet = tweet {
-            if let url = tweet.profileImageURL {
+            if let url = tweet.user?.profileURL {
                 profileImageView.af_setImage(withURL: url)
             }
-            fullNameLabel.text = tweet.fullName
-            userNameLabel.text = "@\(tweet.userName ?? "")"
+            fullNameLabel.text = tweet.user?.name
+            userNameLabel.text = "@\(tweet.user?.username ?? "")"
             tweetTextLabel.text = tweet.text
             retweetsCountLabel.text = "\(tweet.retweetCount)"
             favoritesCountLabel.text = "\(tweet.favoritesCount)"
