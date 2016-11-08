@@ -137,6 +137,14 @@ extension ProfileViewController: TweetCellDelegate {
             self.present(vc, animated: true, completion: nil)
         }
     }
+    func tweetCell(tweetCell: TweetCell, didClickOnProfileImage: Bool) {
+        if let tweet = tweetCell.tweet {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: ProfileViewController.storyboardIdentifier) as! ProfileViewController
+            vc.user = tweet.user
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
 }
 
 extension ProfileViewController: UIScrollViewDelegate {

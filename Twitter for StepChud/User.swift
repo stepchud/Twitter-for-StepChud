@@ -40,7 +40,7 @@ class User: NSObject {
         if let url = dictionary["profile_image_url_https"] as? String {
             profileURL = URL(string: url)
         }
-        if let bgUrl = dictionary["profile_background_image_url_https"] as? String {
+        if let bgUrl = dictionary["profile_banner_url"] as? String {
             profileBackgroundURL = URL(string: bgUrl)
         }
     }

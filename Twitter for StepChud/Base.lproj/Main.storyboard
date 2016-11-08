@@ -719,7 +719,7 @@
                                             <frame key="frameInset" width="375" height="283"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tNy-kU-nS4" userLabel="Profile Background">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tNy-kU-nS4" userLabel="Profile Background">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="140" id="k1q-iJ-yrV"/>
                                                     </constraints>
@@ -730,7 +730,7 @@
                                                         <constraint firstAttribute="height" constant="64" id="ZeD-Bl-bvz"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Stephen Chudleigh" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZf-oW-1z5">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="754" text="Stephen Chudleigh" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZf-oW-1z5">
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -989,6 +989,6 @@
         <image name="retweet" width="16" height="16"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="aDt-po-dXY"/>
+        <segue reference="MlX-87-r3z"/>
     </inferredMetricsTieBreakers>
 </document>

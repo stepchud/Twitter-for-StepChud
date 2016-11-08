@@ -51,6 +51,7 @@ class MentionsViewController: UIViewController, UITableViewDataSource, UITableVi
         let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
         if let tweet = timeline?.tweets?[indexPath.row] {
             cell.tweet = tweet
+            cell.delegate = self
         }
         cell.selectionStyle = .none
         
@@ -107,6 +108,35 @@ class MentionsViewController: UIViewController, UITableViewDataSource, UITableVi
             if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
                 vc.tweet = self.timeline?.tweets?[indexPath.row]
             }
+        }
+    }
+}
+
+extension MentionsViewController: ComposeTweetDelegate {
+    func composeTweetViewController(newTweet: Tweet) {
+        timeline?.prepend(tweets: [newTweet])
+        tableView.reloadData()
+    }
+}
+
+extension MentionsViewController: TweetCellDelegate {
+    func tweetCell(tweetCell: TweetCell, didReply: Bool) {
+        if let tweet = tweetCell.tweet {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: ComposeTweetViewController.storyboardIdentifier) as! UINavigationController
+            if let composeVC = vc.viewControllers.first as? ComposeTweetViewController {
+                composeVC.replyTweet = tweet
+                composeVC.delegate = self
+            }
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+    func tweetCell(tweetCell: TweetCell, didClickOnProfileImage: Bool) {
+        if let tweet = tweetCell.tweet {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: ProfileViewController.storyboardIdentifier) as! ProfileViewController
+            vc.user = tweet.user
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
 }
