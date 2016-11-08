@@ -61,6 +61,9 @@ class HamburgerViewController: UIViewController {
             initialLeftMargin = leftMarginConstraint.constant
         } else if sender.state == .changed {
             leftMarginConstraint.constant = initialLeftMargin + translation.x
+            if leftMarginConstraint.constant < 0 {
+                leftMarginConstraint.constant = 0
+            }
         } else if sender.state == .ended {
             UIView.animate(withDuration: 0.3, animations: {
                 if velocity.x > 0 {

@@ -1,24 +1,24 @@
 //
-//  TweetsViewController.swift
+//  MentionsViewController.swift
 //  Twitter for StepChud
 //
-//  Created by Stephen Chudleigh on 10/27/16.
+//  Created by Stephen Chudleigh on 11/7/16.
 //  Copyright © 2016 Stephen Chudleigh. All rights reserved.
 //
 
 import UIKit
 
-class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MentionsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
-    
+
     var timeline: Timeline?
     var isDataLoading = false
     var loadingMoreView:InfiniteScrollActivityView?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupTableView()
         setupNavigation()
         setupInfiniteScroll()
@@ -42,6 +42,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.insertSubview(refreshControl, at: 0)
     }
     
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return timeline?.tweets?.count ?? 0
     }
@@ -50,17 +51,15 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
         if let tweet = timeline?.tweets?[indexPath.row] {
             cell.tweet = tweet
-            cell.delegate = self
         }
         cell.selectionStyle = .none
         
         return cell
     }
-
+    
     func getTimelineTweets() {
-        TwitterClient.sharedInstance?.homeTimeline(since: nil, before: nil, success: { (tweets: [Tweet]) in
+        TwitterClient.sharedInstance?.mentionsTimeline(since: nil, before: nil, success: { (tweets: [Tweet]) in
             self.timeline = Timeline(tweets: tweets)
-            
             self.tableView.reloadData()
             
             }, failure: { (error: Error) in
@@ -69,7 +68,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func refreshTweets(refreshControl: UIRefreshControl) {
-        TwitterClient.sharedInstance?.homeTimeline(since: timeline?.maxID, before: nil, success: { (newTweets: [Tweet]) in
+        TwitterClient.sharedInstance?.mentionsTimeline(since: timeline?.maxID, before: nil, success: { (newTweets: [Tweet]) in
             self.timeline?.prepend(tweets: newTweets)
             self.tableView.reloadData()
             refreshControl.endRefreshing()
@@ -79,7 +78,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func loadOlderTweets() {
-        TwitterClient.sharedInstance?.homeTimeline(since: nil, before: timeline?.minID, success: { (olderTweets: [Tweet]) in
+        TwitterClient.sharedInstance?.mentionsTimeline(since: nil, before: timeline?.minID, success: { (olderTweets: [Tweet]) in
             self.timeline?.append(tweets: olderTweets)
             self.tableView.reloadData()
             self.isDataLoading = false
@@ -101,27 +100,6 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.contentInset = insets
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    @IBAction func onLogOut(_ sender: AnyObject) {
-        User.currentUser = nil
-        TwitterClient.sharedInstance?.logout()
-        
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: User.userDidLogoutNotification), object: nil)
-    }
-
-    @IBAction func onNewTweet(_ sender: AnyObject) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: ComposeTweetViewController.storyboardIdentifier) as! UINavigationController
-        if let composeVC = vc.viewControllers.first as? ComposeTweetViewController {
-            composeVC.delegate = self
-        }
-        self.present(vc, animated: true, completion: nil)
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         if segue.destination is TweetDetailViewController {
@@ -133,37 +111,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     }
 }
 
-extension TweetsViewController: ComposeTweetDelegate {
-    func composeTweetViewController(newTweet: Tweet) {
-        timeline?.prepend(tweets: [newTweet])
-        tableView.reloadData()
-    }
-}
-
-extension TweetsViewController: TweetCellDelegate {
-    func tweetCell(tweetCell: TweetCell, didReply: Bool) {
-        if let tweet = tweetCell.tweet {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: ComposeTweetViewController.storyboardIdentifier) as! UINavigationController
-            if let composeVC = vc.viewControllers.first as? ComposeTweetViewController {
-                composeVC.replyTweet = tweet
-                composeVC.delegate = self
-            }
-            self.present(vc, animated: true, completion: nil)
-        }
-    }
-    
-    func tweetCell(tweetCell: TweetCell, didClickOnProfileImage: Bool) {
-        if let tweet = tweetCell.tweet {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: ProfileViewController.storyboardIdentifier) as! ProfileViewController
-            vc.user = tweet.user
-            navigationController?.pushViewController(vc, animated: true)
-        }
-    }
-}
-
-extension TweetsViewController: UIScrollViewDelegate {
+extension MentionsViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if !isDataLoading {
             // Calculate the position of one screen length before the bottom of the results

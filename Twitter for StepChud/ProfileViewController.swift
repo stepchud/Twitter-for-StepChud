@@ -10,18 +10,14 @@ import UIKit
 import AlamofireImage
 
 class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
-    @IBOutlet weak var profileBackgroundImage: UIImageView!
-    @IBOutlet weak var profileImage: UIImageView!
-    
-    @IBOutlet weak var fullNameLabel: UILabel!
-    @IBOutlet weak var userNameLabel: UILabel!
-    @IBOutlet weak var profileBlurbLabel: UILabel!
-    @IBOutlet weak var followingCountLabel: UILabel!
-    @IBOutlet weak var followerCountLabel: UILabel!
+    static let storyboardIdentifier = "ProfileViewController"
     
     @IBOutlet weak var tableView: UITableView!
     
+    var isDataLoading = false
+    var loadingMoreView:InfiniteScrollActivityView?
+    
+    var user: User!
     var timeline: Timeline?
     
     override func viewDidLoad() {
@@ -32,26 +28,21 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120
         
-        setupHeaderDetails()
+        if user == nil {
+            user = User.currentUser
+        }
+        
+        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.barTintColor = TwitterBlue
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        
+        setupInfiniteScroll()
         loadUserTimeline()
     }
 
-    func setupHeaderDetails() {
-        fullNameLabel.text = User.currentUser?.name
-        userNameLabel.text = "@\(User.currentUser?.username ?? "")"
-        profileBlurbLabel.text = User.currentUser?.tagLine
-        if let profileImageURL = User.currentUser?.profileURL {
-            profileImage.af_setImage(withURL: profileImageURL)
-        }
-        if let profileBackgroundURL = User.currentUser?.profileBackgroundURL {
-            profileBackgroundImage.af_setImage(withURL: profileBackgroundURL)
-        }
-        followingCountLabel.text = "\(User.currentUser?.followingCount ?? 0)"
-        followerCountLabel.text = "\(User.currentUser?.followerCount ?? 0)"
-    }
 
     func loadUserTimeline() {
-        TwitterClient.sharedInstance?.userTimeline(for: User.currentUser!.username!, since: nil, before: nil, success: { (tweets: [Tweet]) in
+        TwitterClient.sharedInstance?.userTimeline(for: user.username!, since: nil, before: nil, success: { (tweets: [Tweet]) in
             self.timeline = Timeline(tweets: tweets)
             
             self.tableView.reloadData()
@@ -61,17 +52,56 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         })
     }
     
+    
+    func loadOlderTweets() {
+        TwitterClient.sharedInstance?.userTimeline(for: user.username!, since: nil, before: timeline?.minID, success: { (olderTweets: [Tweet]) in
+            self.timeline?.append(tweets: olderTweets)
+            self.tableView.reloadData()
+            self.isDataLoading = false
+            self.loadingMoreView!.stopAnimating()
+            }, failure: { (error: Error) in
+                // handle error loading tweets
+        })
+    }
+    
+    // Set up Infinite Scroll loading indicator
+    func setupInfiniteScroll() {
+        let frame = CGRect(x: 0, y: tableView.contentSize.height, width: tableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
+        loadingMoreView = InfiniteScrollActivityView(frame: frame)
+        loadingMoreView!.isHidden = true
+        tableView.addSubview(loadingMoreView!)
+        
+        var insets = tableView.contentInset;
+        insets.bottom += InfiniteScrollActivityView.defaultHeight;
+        tableView.contentInset = insets
+    }
+    
+    // first row has the profile info & images
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return timeline?.tweets?.count ?? 0
+        if let tweets = timeline?.tweets {
+            return tweets.count + 1
+        } else {
+            return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
-        if let tweet = timeline?.tweets?[indexPath.row] {
-            cell.tweet = tweet
-            cell.delegate = self
+        if indexPath.row==0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "UserProfileCell", for: indexPath) as! UserProfileCell
+            cell.user = user
+            cell.selectionStyle = .none
+            
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
+            if let tweet = timeline?.tweets?[indexPath.row-1] {
+                cell.tweet = tweet
+                cell.delegate = self
+            }
+            cell.selectionStyle = .none
+            
+            return cell
         }
-        return cell
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -79,7 +109,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         if segue.destination is TweetDetailViewController {
             let vc = segue.destination as! TweetDetailViewController
             if let indexPath = tableView.indexPath(for: sender as! UITableViewCell) {
-                vc.tweet = self.timeline?.tweets?[indexPath.row]
+                vc.tweet = self.timeline?.tweets?[indexPath.row-1]
             }
         }
     }
@@ -88,7 +118,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 
 extension ProfileViewController: ComposeTweetDelegate {
     func composeTweetViewController(newTweet: Tweet) {
-        if User.currentUser == newTweet.user {
+        if user.username == newTweet.user?.username {
             timeline?.prepend(tweets: [newTweet])
             tableView.reloadData()
         }
@@ -105,6 +135,28 @@ extension ProfileViewController: TweetCellDelegate {
                 composeVC.delegate = self
             }
             self.present(vc, animated: true, completion: nil)
+        }
+    }
+}
+
+extension ProfileViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if !isDataLoading {
+            // Calculate the position of one screen length before the bottom of the results
+            let scrollViewContentHeight = tableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
+            
+            // When the user has scrolled past the threshold, start requesting
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.isDragging) {
+                isDataLoading = true
+                
+                // Update position of loadingMoreView, and start loading indicator
+                let frame = CGRect(x: 0, y: tableView.contentSize.height, width: tableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
+                loadingMoreView?.frame = frame
+                loadingMoreView!.startAnimating()
+                
+                loadOlderTweets()
+            }
         }
     }
 }

@@ -11,6 +11,7 @@ import AlamofireImage
 
 @objc protocol TweetCellDelegate {
     @objc optional func tweetCell(tweetCell: TweetCell, didReply: Bool)
+    @objc optional func tweetCell(tweetCell: TweetCell, didClickOnProfileImage: Bool)
 }
 
 class TweetCell: UITableViewCell {
@@ -49,13 +50,18 @@ class TweetCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        let tap = UITapGestureRecognizer(target: self, action: #selector(onProfileImageClicked))
+        profileImageView.addGestureRecognizer(tap)
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func onProfileImageClicked(_ sender: UIImageView) {
+        delegate?.tweetCell?(tweetCell: self, didClickOnProfileImage: true)
     }
 
     @IBAction func onReplyButton(_ sender: UIButton) {

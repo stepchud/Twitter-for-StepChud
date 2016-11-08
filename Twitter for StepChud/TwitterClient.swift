@@ -118,6 +118,26 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
+    func mentionsTimeline(since: Int?, before: Int?, success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
+        var parameters = [String: Any]()
+        if let since = since {
+            parameters["since_id"] = since
+        }
+        if let before = before {
+            parameters["max_id"] = before
+        }
+        print("mentionsTimeline(\(parameters)")
+        get("1.1/statuses/mentions_timeline.json", parameters: parameters, progress: nil,
+            success: { (task: URLSessionDataTask?, response: Any?) in
+                let dictionaries = response as! [NSDictionary]
+                let tweets = Tweet.fromArray(dictionaries: dictionaries)
+                success(tweets)
+            },
+            failure: { (task: URLSessionDataTask?, error: Error) in
+                failure(error)
+        })
+    }
+    
     func sendTweet(_ text: String, replyTweet: Tweet?, success: @escaping (Tweet) -> (), failure: @escaping (Error) ->()) {
         print("sending tweet to: \(replyTweet?.id!)")
         var parameters = ["status": text]
